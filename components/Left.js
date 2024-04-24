@@ -14,7 +14,7 @@ const Left = () => {
   const colors = tokens(theme.palette.mode);
 
   return (
-    <Box className=" w-full  rounded-xl h-full p-5 overflow-y-scroll">
+    <Box className=" w-full  rounded-xl h-full p-4 overflow-y-scroll">
       {/* <Carousal /> */}
 
       <Box className="flex items-center justify-between py-5">

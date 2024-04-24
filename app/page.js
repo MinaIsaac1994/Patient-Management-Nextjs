@@ -10,12 +10,12 @@ export default function Home() {
 
   return (
     <>
-      <Box className=" w-[25%] hidden lg:block ">
+      <Box className=" w-[24%] hidden lg:block ">
         <Card className=" h-full">
           <Left />
         </Card>
       </Box>
-      <Box className="w-full md:w-[100%] lg:w-[70%]">
+      <Box className="w-full md:w-[100%] lg:w-[76%]">
         <Right />
       </Box>
     </>

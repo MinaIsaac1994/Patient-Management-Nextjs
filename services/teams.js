@@ -17,8 +17,17 @@ const fetchAll = async () => {
     simpleErrorHandling(err, "Loading Teams Failed");
   }
 };
+const fetchById = async (id) => {
+  try {
+    const { data } = await axios.get("/teams/" + id);
+    return data;
+  } catch (err) {
+    simpleErrorHandling(err, "Loading Team Deatils Failed");
+  }
+};
 
 export const TeamServices = {
   add,
   fetchAll,
+  fetchById,
 };

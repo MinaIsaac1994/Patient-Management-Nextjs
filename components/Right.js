@@ -20,7 +20,7 @@ const Right = () => {
   const colors = tokens(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
   return (
-    <Box className=" w-full  rounded-xl h-full px-5 overflow-y-scroll">
+    <Box className=" w-full  rounded-xl h-full px-4 overflow-y-scroll">
       <Box>
         <Topbar title="Dashboard" />
       </Box>
