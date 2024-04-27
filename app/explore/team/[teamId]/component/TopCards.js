@@ -6,6 +6,7 @@ import OpelCard from "./OpelCard";
 import icons from "@/components/icons";
 import PatientsCard from "./PatientsCard";
 import ContactsCard from "./ContactsCard";
+import ReferralCard from "./ReferralCard";
 
 const TopCards = () => {
   const theme = useTheme();
@@ -15,9 +16,10 @@ const TopCards = () => {
     // <Box className=" w-full  rounded-xl h-full px-4 overflow-y-scroll">
 
     <Box className=" grid grid-cols-2 md:grid-cols-4 gap-3">
-      <OpelCard title="Average Opel" Icon={icons.Opel} value={5} />
+      <OpelCard title="Opel" Icon={icons.Opel} value={5} />
+      <ContactsCard title="Contacts" Icon={icons.Contacts} value={172} />
       <PatientsCard title="Patients" Icon={icons.Patient} value={26} />
-      <ContactsCard title="Total Contacts" Icon={icons.Contacts} value={172} />
+      <ReferralCard title="Referrals" Icon={icons.PendingReferral} value={20} />
     </Box>
 
     // </Box>
@@ -25,7 +27,3 @@ const TopCards = () => {
 };
 
 export default TopCards;
-
-const topCardsData = [
-  { title: "Pending Referrals", Icon: icons.PendingReferral, value: 20 },
-];

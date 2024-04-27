@@ -21,7 +21,7 @@ const TeamPage = ({ params }) => {
     };
     fetchData();
   }, []);
-  console.log(team);
+
   return (
     <Box className="w-full h-full px-4 overflow-y-scroll">
       <Box>

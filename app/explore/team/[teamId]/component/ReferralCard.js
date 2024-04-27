@@ -7,77 +7,86 @@ import { Grid, IconButton, useTheme } from "@mui/material";
 import CardWrapper from "@/components/cards/card-wrapper";
 import ReactApexChart from "react-apexcharts";
 
-export default function ContactsCard({ Icon, title, details, value = 0 }) {
+export default function ReferralCard({ Icon, title, details, value = 0 }) {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
   const data = {
-    series: [
-      {
-        name: "Patients",
-        data: [10, 9, 30],
-      },
-      {
-        name: "Therapist",
-        data: [20, 30, 40],
-      },
-    ],
+    series: [67, 84, 50],
     options: {
-      dataLabels: {
-        enabled: false,
+      plotOptions: {
+        radialBar: {
+          track: {
+            show: true,
+            startAngle: undefined,
+            endAngle: undefined,
+            background: "#c0c0c0",
+            strokeWidth: "10%",
+            opacity: 0,
+            margin: 5,
+            dropShadow: {
+              enabled: true,
+              top: 0,
+              left: 0,
+              blur: 3,
+              opacity: 0.5,
+            },
+          },
+          hollow: {
+            // margin: 5,
+            size: "40%",
+          },
+
+          dataLabels: {
+            showOn: "always",
+            name: {
+              offsetY: -5,
+              show: true,
+              color: "#a4a4a4",
+              fontSize: "12px",
+            },
+            value: {
+              offsetY: -5,
+              color: "#dbdbdb",
+              fontSize: "16px",
+              show: true,
+            },
+          },
+        },
       },
-      grid: {
-        show: false,
+
+      stroke: {
+        lineCap: "round",
       },
+
+      labels: ["Pending", "Sent", "Accepted"],
+
       legend: {
         show: false,
       },
       chart: {
-        height: "10%",
+        height: "100",
         toolbar: {
           show: false,
         },
 
-        type: "radar",
+        type: "radialBar",
         dropShadow: {
           enabled: false,
         },
       },
 
       stroke: {
-        width: 2,
+        lineCap: "round",
       },
       fill: {
-        opacity: 0.1,
+        opacity: 0.7,
       },
       markers: {
         size: 0,
       },
       tooltip: {
         enabled: false,
-      },
-      yaxis: {
-        stepSize: 50,
-        show: false,
-        labels: {
-          show: false,
-        },
-        axisBorder: {
-          show: false,
-        },
-        axisTicks: {
-          show: false,
-        },
-      },
-      xaxis: {
-        categories: ["N/A", "OT", "PT"],
-        show: false,
-        labels: {
-          show: true,
-        },
-        axisBorder: {
-          show: false,
-        },
       },
     },
   };
@@ -120,7 +129,7 @@ export default function ContactsCard({ Icon, title, details, value = 0 }) {
             sx={{
               height: 180,
               position: "relative",
-              top: "40px",
+              top: "5px",
               display: "flex",
               justifyContent: "flex-end",
               alignItems: "center",
@@ -130,8 +139,8 @@ export default function ContactsCard({ Icon, title, details, value = 0 }) {
               <ReactApexChart
                 options={data.options}
                 series={data.series}
-                type="radar"
-                height={240}
+                type="radialBar"
+                height={220}
               />
             </Box>
           </Grid>
