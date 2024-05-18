@@ -6,20 +6,11 @@ const RenderTextField = ({ id, label, Icon, multiline, size }) => (
     <Field name={id}>
       {({ field }) => (
         <TextField
+          type="date"
           {...field}
           fullWidth
-          label={label}
           margin="dense"
           variant="outlined"
-          multiline={multiline}
-          rows={2}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <Icon />
-              </InputAdornment>
-            ),
-          }}
         />
       )}
     </Field>

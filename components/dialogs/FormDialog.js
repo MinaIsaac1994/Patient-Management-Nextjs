@@ -20,6 +20,8 @@ import RenderTextField from "../costumFields/RenderTextField";
 import RenderSelectField from "../costumFields/RenderSelectField";
 import RenderMultiSelectField from "../costumFields/RenderMultiSelectField";
 import RenderSwitchField from "../costumFields/RenderSwitchField";
+import RenderDateField from "../costumFields/RenderDateField";
+import RenderToggleButton from "../costumFields/RenderToggleButton";
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -86,6 +88,18 @@ const FormDialog = ({
                         />
                       );
                     }
+                    if (type === "date") {
+                      return (
+                        <RenderDateField
+                          key={id}
+                          id={id}
+                          label={label}
+                          Icon={Icon}
+                          multiline={multiline}
+                          size={size}
+                        />
+                      );
+                    }
                     if (type === "select") {
                       return (
                         <RenderSelectField
@@ -114,6 +128,17 @@ const FormDialog = ({
                     if (type === "switch") {
                       return (
                         <RenderSwitchField
+                          key={id}
+                          id={id}
+                          label={label}
+                          size={size}
+                          setFieldValue={setFieldValue}
+                        />
+                      );
+                    }
+                    if (type === "toggle") {
+                      return (
+                        <RenderToggleButton
                           key={id}
                           id={id}
                           label={label}

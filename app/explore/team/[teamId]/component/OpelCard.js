@@ -143,7 +143,7 @@ export default function OpelCard({ Icon, title, details, value = 0 }) {
                 series={data.series}
                 type="bar"
                 height={100}
-                width={320}
+                width={"100%"}
               />
             </Box>
           </Grid>

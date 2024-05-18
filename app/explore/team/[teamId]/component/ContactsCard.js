@@ -132,6 +132,7 @@ export default function ContactsCard({ Icon, title, details, value = 0 }) {
                 series={data.series}
                 type="radar"
                 height={240}
+                width={"100%"}
               />
             </Box>
           </Grid>

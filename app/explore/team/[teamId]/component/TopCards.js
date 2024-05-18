@@ -1,6 +1,6 @@
 import { ColorModeContext, tokens } from "@/theme";
-import { Box, Typography, useTheme } from "@mui/material";
-import React, { useContext } from "react";
+import { Box, useTheme } from "@mui/material";
+import { useContext } from "react";
 
 import OpelCard from "./OpelCard";
 import icons from "@/components/icons";

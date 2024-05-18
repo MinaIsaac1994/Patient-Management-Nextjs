@@ -2,7 +2,7 @@
 import icons from "@/components/icons";
 import Topbar from "@/components/topbar";
 import { tokens, useMode } from "@/theme";
-import CustomTable from "./components/Table";
+import CustomTable from "../../components/Table";
 import { useToaster } from "@/config/Toaster";
 import { TeamServices } from "@/services/teams";
 import { useEffect, useMemo, useState } from "react";

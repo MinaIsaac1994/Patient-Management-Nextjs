@@ -76,19 +76,20 @@ const Table = ({ data, columns, detailPanel = null, rowActions = null }) => {
   const table = useMaterialReactTable({
     data, //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
     columns,
+    enableDensityToggle: false,
     enableColumnFilterModes: true,
     enableColumnOrdering: true,
     enableGrouping: true,
     enableColumnPinning: true,
     enableFacetedValues: true,
     enableRowActions: rowActions ? true : false,
-    enableRowSelection: true,
+    enableRowSelection: false,
     initialState: {
-      showColumnFilters: true,
+      showColumnFilters: false,
       showGlobalFilter: true,
       columnPinning: {
-        left: ["mrt-row-expand", "mrt-row-select"],
-        right: ["mrt-row-actions"],
+        // left: ["mrt-row-expand", "mrt-row-select", "name", "dob", "nhs_number"],
+        right: ["mrt-row-actions", "opel"],
       },
     },
     paginationDisplayMode: "pages",
@@ -105,71 +106,71 @@ const Table = ({ data, columns, detailPanel = null, rowActions = null }) => {
     },
     renderDetailPanel: detailPanel,
     renderRowActionMenuItems,
-    renderTopToolbar: ({ table }) => {
-      const handleDeactivate = () => {
-        table.getSelectedRowModel().flatRows.map((row) => {
-          alert("deactivating " + row.getValue("name"));
-        });
-      };
+    // renderTopToolbar: ({ table }) => {
+    //   const handleDeactivate = () => {
+    //     table.getSelectedRowModel().flatRows.map((row) => {
+    //       alert("deactivating " + row.getValue("name"));
+    //     });
+    //   };
 
-      const handleActivate = () => {
-        table.getSelectedRowModel().flatRows.map((row) => {
-          alert("activating " + row.getValue("name"));
-        });
-      };
+    //   const handleActivate = () => {
+    //     table.getSelectedRowModel().flatRows.map((row) => {
+    //       alert("activating " + row.getValue("name"));
+    //     });
+    //   };
 
-      const handleContact = () => {
-        table.getSelectedRowModel().flatRows.map((row) => {
-          alert("contact " + row.getValue("name"));
-        });
-      };
+    //   const handleContact = () => {
+    //     table.getSelectedRowModel().flatRows.map((row) => {
+    //       alert("contact " + row.getValue("name"));
+    //     });
+    //   };
 
-      return (
-        <Box
-          sx={(theme) => ({
-            backgroundColor: lighten(theme.palette.background.default, 0.05),
-            display: "flex",
-            gap: "0.5rem",
-            p: "8px",
-            justifyContent: "space-between",
-          })}
-        >
-          <Box sx={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
-            {/* import MRT sub-components */}
-            <MRT_GlobalFilterTextField table={table} />
-            <MRT_ToggleFiltersButton table={table} />
-          </Box>
-          <Box>
-            <Box sx={{ display: "flex", gap: "0.5rem" }}>
-              <Button
-                color="error"
-                disabled={!table.getIsSomeRowsSelected()}
-                onClick={handleDeactivate}
-                variant="contained"
-              >
-                Deactivate
-              </Button>
-              <Button
-                color="success"
-                disabled={!table.getIsSomeRowsSelected()}
-                onClick={handleActivate}
-                variant="contained"
-              >
-                Activate
-              </Button>
-              <Button
-                color="info"
-                disabled={!table.getIsSomeRowsSelected()}
-                onClick={handleContact}
-                variant="contained"
-              >
-                Contact
-              </Button>
-            </Box>
-          </Box>
-        </Box>
-      );
-    },
+    //   return (
+    //     <Box
+    //       sx={(theme) => ({
+    //         backgroundColor: lighten(theme.palette.background.default, 0.05),
+    //         display: "flex",
+    //         gap: "0.5rem",
+    //         p: "8px",
+    //         justifyContent: "space-between",
+    //       })}
+    //     >
+    //       <Box sx={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
+    //         {/* import MRT sub-components */}
+    //         <MRT_GlobalFilterTextField table={table} />
+    //         <MRT_ToggleFiltersButton table={table} />
+    //       </Box>
+    //       <Box>
+    //         <Box sx={{ display: "flex", gap: "0.5rem" }}>
+    //           <Button
+    //             color="error"
+    //             disabled={!table.getIsSomeRowsSelected()}
+    //             onClick={handleDeactivate}
+    //             variant="contained"
+    //           >
+    //             Deactivate
+    //           </Button>
+    //           <Button
+    //             color="success"
+    //             disabled={!table.getIsSomeRowsSelected()}
+    //             onClick={handleActivate}
+    //             variant="contained"
+    //           >
+    //             Activate
+    //           </Button>
+    //           <Button
+    //             color="info"
+    //             disabled={!table.getIsSomeRowsSelected()}
+    //             onClick={handleContact}
+    //             variant="contained"
+    //           >
+    //             Contact
+    //           </Button>
+    //         </Box>
+    //       </Box>
+    //     </Box>
+    //   );
+    // },
   });
 
   return (

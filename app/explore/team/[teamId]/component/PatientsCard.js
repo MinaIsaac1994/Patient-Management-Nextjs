@@ -152,7 +152,7 @@ export default function PatientsCard({ Icon, title, details, value = 0 }) {
                 series={data.series}
                 type="treemap"
                 height={110}
-                width={300}
+                width={"100%"}
               />
             </Box>
           </Grid>
