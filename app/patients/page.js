@@ -6,11 +6,15 @@ import { useEffect, useState } from "react";
 import { useToaster } from "@/config/Toaster";
 import { TeamServices } from "@/services/teams";
 import CustomTable from "../../components/Table";
+import { WardsServices } from "@/services/wards";
+import { PatientModel } from "@/models/patients";
 import { Box, Fab, Typography } from "@mui/material";
+import { PatientServices } from "@/services/patients";
 import { TherapistServices } from "@/services/therapist";
 import FormDialog from "@/components/dialogs/FormDialog";
 import EditFormDialog from "@/components/dialogs/EditFormDialog";
 import usePatientsColumns from "@/config/columns/usePatientsColumns";
+import DetailPanel from "@/components/detailPanels/patientDetailPanel";
 
 const Patients = () => {
   const AddIcon = icons.Add;
@@ -21,57 +25,60 @@ const Patients = () => {
   const { columns } = usePatientsColumns();
 
   const [id, setId] = useState(null);
-  const [therapists, setTherapists] = useState([]);
+  const [patients, setPatients] = useState([]);
   const [openAddPatient, setOpenAddPatient] = useState(false);
   const [openEditPatient, setOpenEditPatient] = useState(false);
 
   useEffect(() => {
-    fetchTherapists();
+    fetchPatients();
   }, []);
 
-  const fetchTherapists = async () => {
+  const fetchPatients = async () => {
     try {
-      const data = await TherapistServices.fetchAll();
-      setTherapists(data);
+      const data = await PatientServices.fetchAll();
+      const mappedData = PatientModel.fetchAll(data, columns);
+      setPatients(mappedData);
     } catch (err) {
       showToaster("error", err.message);
     }
   };
 
-  const addTherapist = async (data) => {
+  const addPatient = async (data) => {
     try {
-      await TherapistServices.add(data);
-      fetchTherapists();
+      const result = await PatientServices.add(data);
+      if (result) setOpenAddPatient(false);
+      fetchPatients();
     } catch (err) {
       showToaster("error", err.message);
     }
   };
-  const removeTherapist = async ({ id }) => {
+  const removePatient = async ({ nhs_number }) => {
     try {
-      await TherapistServices.remove(id);
-      fetchTherapists();
+      await PatientServices.remove(nhs_number);
+      fetchPatients();
     } catch (err) {
       showToaster("error", err.message);
     }
   };
-  const editTherapist = async (data) => {
+  const editPatient = async (data) => {
     try {
-      await TherapistServices.edit(id, data);
-      fetchTherapists();
+      const result = await PatientServices.edit(id, data);
+      if (result) setOpenAddPatient(false);
+      fetchPatients();
     } catch (err) {
       showToaster("error", err.message);
     }
   };
-  const fetchTherapistById = async () => {
+  const fetchPatientById = async () => {
     try {
-      return await TherapistServices.fetchById(id);
+      return await PatientServices.fetchById(id);
     } catch (err) {
       showToaster("error", err.message);
     }
   };
 
   const handleEditClick = (row) => {
-    setId(row?.id);
+    setId(row?.nhs_number);
     setOpenEditPatient(true);
   };
 
@@ -83,20 +90,23 @@ const Patients = () => {
         </Box>
         <Box sx={{ m: 1 }}>
           <CustomTable
-            data={therapists}
+            data={patients}
             columns={columns}
-            // rowActions={[
-            //   {
-            //     icon: "Edit",
-            //     name: "Edit",
-            //     onClick: handleEditClick,
-            //   },
-            //   {
-            //     icon: "Delete",
-            //     name: "Delete",
-            //     onClick: removeTherapist,
-            //   },
-            // ]}
+            detailPanel={({ row }) => (
+              <DetailPanel row={row.original?.detailPanel} />
+            )}
+            rowActions={[
+              {
+                icon: "Edit",
+                name: "Edit",
+                onClick: handleEditClick,
+              },
+              {
+                icon: "Delete",
+                name: "Delete",
+                onClick: removePatient,
+              },
+            ]}
           />
         </Box>
         <Fab
@@ -119,19 +129,18 @@ const Patients = () => {
           open={openAddPatient}
           title="Add New Patient"
           formStructer={formStructer}
-          handleSubmit={addTherapist}
+          handleSubmit={addPatient}
           onClose={() => setOpenAddPatient(false)}
           apiArr={[{ id: "teamId", apiCall: TeamServices.fetchAll }]}
         />
       )}
       {openEditPatient && (
         <EditFormDialog
-          id={id}
           title="Edit Patient"
           open={openEditPatient}
+          handleSubmit={editPatient}
           formStructer={formStructer}
-          handleSubmit={editTherapist}
-          fetchApi={fetchTherapistById}
+          fetchApi={fetchPatientById}
           onClose={() => setOpenEditPatient(false)}
           apiArr={[{ id: "teamId", apiCall: TeamServices.fetchAll }]}
         />
@@ -184,7 +193,7 @@ const formStructer = [
     label: "Ward",
     type: "select",
     Icon: () => <Badge />,
-    api: TeamServices.fetchAll,
+    api: WardsServices.fetchAll,
   },
   { label: "Diagnosis", id: "diagnosis", size: 8, Icon: () => <Diagnosis /> },
   {
@@ -195,9 +204,15 @@ const formStructer = [
     multiline: true,
   },
   {
-    size: 8,
+    size: 12,
     type: "toggle",
-    id: "specifity",
-    label: "Specifity",
+    id: "specificity",
+    label: "Specificity",
+  },
+  {
+    size: 12,
+    type: "slider",
+    id: "priority",
+    label: "Opel",
   },
 ];

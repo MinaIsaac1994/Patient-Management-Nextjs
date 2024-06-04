@@ -8,17 +8,27 @@ import CardContent from "@mui/material/CardContent";
 import { Chart as ChartJs } from "chart.js/auto";
 import { Doughnut } from "react-chartjs-2";
 import Divider from "@mui/material/Divider";
-import { countSpecialties } from "@/utils/functions";
+import {
+  countSpecialties,
+  transformPrioritiesResponse,
+} from "@/utils/functions";
 import Link from "next/link";
 const ReactApexChart = dynamic(() => import("react-apexcharts"), {
   ssr: false,
 });
-const TeamCard = ({ name, id = "id", description, users = [] }) => {
+const TeamCard = ({
+  name,
+  id = "id",
+  users = [],
+  description,
+  totalPatients,
+  priorities = [],
+}) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
   const { PT, OT, TA } = countSpecialties(users);
-
+  console.log();
   return (
     <CardWrapper borderRadius={"30px"}>
       <CardContent>
@@ -50,7 +60,7 @@ const TeamCard = ({ name, id = "id", description, users = [] }) => {
                   datasets: [
                     {
                       label: "Contacts",
-                      data: [10, 20, 7, 4],
+                      data: transformPrioritiesResponse(priorities).reverse(),
                       borderRadius: 12,
                       borderWidth: 6,
                       borderColor: colors.grey["800"],
@@ -73,7 +83,7 @@ const TeamCard = ({ name, id = "id", description, users = [] }) => {
                   zIndex: 1,
                 }}
               >
-                <Typography variant="h3">31</Typography>
+                <Typography variant="h3">{totalPatients}</Typography>
               </Box>
             </Box>
           </Box>

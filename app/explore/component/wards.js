@@ -77,10 +77,10 @@ export const WardsComponent = ({}) => {
 };
 const { Badge, Description, TeamLead } = icons;
 const formStructer = [
-  { size: 6, label: "Name", id: "name", icon: Badge },
+  { size: 12, label: "Name", id: "name", icon: Badge },
   {
     type: "text",
-    size: 6,
+    size: 12,
     label: "Description",
     id: "description",
     icon: Description,

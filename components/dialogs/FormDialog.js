@@ -3,40 +3,38 @@ import {
   Grid,
   Slide,
   Button,
-  Switch,
   Dialog,
   Typography,
   DialogTitle,
   DialogContent,
   DialogActions,
-  FormControlLabel,
 } from "@mui/material";
 import { forwardRef } from "react";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form } from "formik";
 import { useToaster } from "@/config/Toaster";
 import useFormStructure from "@/hooks/useFormStructure";
 import { convertArrayToObject } from "@/utils/functions";
 import RenderTextField from "../costumFields/RenderTextField";
-import RenderSelectField from "../costumFields/RenderSelectField";
-import RenderMultiSelectField from "../costumFields/RenderMultiSelectField";
-import RenderSwitchField from "../costumFields/RenderSwitchField";
 import RenderDateField from "../costumFields/RenderDateField";
+import RenderOpelSlider from "../costumFields/RenderOpelSlider";
+import RenderSelectField from "../costumFields/RenderSelectField";
+import RenderSwitchField from "../costumFields/RenderSwitchField";
 import RenderToggleButton from "../costumFields/RenderToggleButton";
+import RenderMultiSelectField from "../costumFields/RenderMultiSelectField";
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
 const FormDialog = ({
-  onClose,
   title = "",
   open = false,
   formStructer = [],
+  onClose = () => null,
   handleSubmit = () => null,
 }) => {
   const { showToaster } = useToaster();
   const { fields } = useFormStructure(formStructer);
-  console.log(convertArrayToObject(fields));
   return (
     <Dialog
       fullWidth
@@ -57,7 +55,6 @@ const FormDialog = ({
             try {
               await handleSubmit(values);
               onClose();
-              // console.log(values);
             } catch (err) {
               showToaster("error", err.message);
             }
@@ -72,8 +69,8 @@ const FormDialog = ({
                     label,
                     list = [],
                     size = 12,
-                    multiline,
                     type = "text",
+                    multiline = false,
                     Icon = () => null,
                   }) => {
                     if (type === "text") {
@@ -91,24 +88,24 @@ const FormDialog = ({
                     if (type === "date") {
                       return (
                         <RenderDateField
-                          key={id}
                           id={id}
-                          label={label}
+                          key={id}
                           Icon={Icon}
-                          multiline={multiline}
                           size={size}
+                          label={label}
+                          multiline={multiline}
                         />
                       );
                     }
                     if (type === "select") {
                       return (
                         <RenderSelectField
-                          key={id}
                           id={id}
-                          label={label}
+                          key={id}
                           Icon={Icon}
                           list={list}
                           size={size}
+                          label={label}
                         />
                       );
                     }
@@ -116,11 +113,11 @@ const FormDialog = ({
                     if (type === "multiselect") {
                       return (
                         <RenderMultiSelectField
-                          key={id}
                           id={id}
-                          label={label}
+                          key={id}
                           list={list}
                           size={size}
+                          label={label}
                           setFieldValue={setFieldValue}
                         />
                       );
@@ -128,10 +125,10 @@ const FormDialog = ({
                     if (type === "switch") {
                       return (
                         <RenderSwitchField
-                          key={id}
                           id={id}
-                          label={label}
+                          key={id}
                           size={size}
+                          label={label}
                           setFieldValue={setFieldValue}
                         />
                       );
@@ -139,10 +136,21 @@ const FormDialog = ({
                     if (type === "toggle") {
                       return (
                         <RenderToggleButton
-                          key={id}
                           id={id}
-                          label={label}
+                          key={id}
                           size={size}
+                          label={label}
+                          setFieldValue={setFieldValue}
+                        />
+                      );
+                    }
+                    if (type === "slider") {
+                      return (
+                        <RenderOpelSlider
+                          id={id}
+                          key={id}
+                          size={size}
+                          label={label}
                           setFieldValue={setFieldValue}
                         />
                       );
@@ -163,8 +171,8 @@ const FormDialog = ({
                     sx={{ mx: 3 }}
                     size="large"
                     color="error"
-                    variant="outlined"
                     onClick={onClose}
+                    variant="outlined"
                   >
                     Cancel
                   </Button>

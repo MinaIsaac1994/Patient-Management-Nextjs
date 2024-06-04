@@ -37,17 +37,21 @@ export const TeamsComponent = ({}) => {
   };
   return (
     <>
-      {teams.map(({ name, id, description, users }) => {
-        return (
-          <TeamCard
-            id={id}
-            key={id}
-            name={name}
-            users={users}
-            description={description}
-          />
-        );
-      })}
+      {teams.map(
+        ({ name, id, description, users, totalPatients, priorities }) => {
+          return (
+            <TeamCard
+              id={id}
+              key={id}
+              name={name}
+              users={users}
+              priorities={priorities}
+              description={description}
+              totalPatients={totalPatients}
+            />
+          );
+        }
+      )}
       <Fab
         onClick={() => setOpenAddTeam(true)}
         size="large"
@@ -78,17 +82,17 @@ export const TeamsComponent = ({}) => {
 };
 const { Badge, Description, TeamLead } = icons;
 const formStructer = [
-  { size: 6, label: "Name", id: "name", icon: Badge },
+  { size: 12, label: "Name", id: "name", icon: Badge },
   {
     type: "text",
-    size: 6,
+    size: 12,
     label: "Description",
     id: "description",
     icon: Description,
     multiline: true,
   },
   {
-    size: 12,
+    size: 6,
     label: "Members",
     id: "usersId",
     Icon: () => <TeamLead />,
@@ -97,7 +101,7 @@ const formStructer = [
     api: TherapistServices.fetchAll,
   },
   {
-    size: 12,
+    size: 6,
     label: "Wards",
     id: "wardsId",
     Icon: () => <TeamLead />,

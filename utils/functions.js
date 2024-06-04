@@ -9,9 +9,11 @@ export const convertArrayToObject = (array) => {
       case "select":
         initialValue = [];
         break;
-
       case "switch":
         initialValue = false;
+        break;
+      case "slider":
+        initialValue = 1;
         break;
       default:
         initialValue = "";
@@ -37,3 +39,9 @@ export const countSpecialties = (users) => {
 
   return specialtyCounts;
 };
+
+export const transformPrioritiesResponse = (response) =>
+  Array.from({ length: 4 }, (_, index) => {
+    const foundPriority = response.find((obj) => obj[index + 1] !== undefined);
+    return foundPriority ? foundPriority[index + 1] : 0;
+  });

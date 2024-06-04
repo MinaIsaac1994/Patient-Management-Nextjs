@@ -1,8 +1,8 @@
-import { Box, Grid, Slider } from "@mui/material";
 import { Field } from "formik";
+import { Grid, Slider } from "@mui/material";
 
-const OpelSlider = ({ onChange, value }) => (
-  <Grid item xs={size}>
+const RenderOpelSlider = ({ id, label, size }) => (
+  <Grid item xs={size} sx={{ mx: 5 }}>
     <Field name={id}>
       {({ field }) => (
         <Slider
@@ -11,14 +11,30 @@ const OpelSlider = ({ onChange, value }) => (
           min={1}
           max={4}
           marks={marks}
-          id="opel"
-          value={value}
-          onChange={onChange}
-          name="opel"
+          // value={value}
+          // onChange={onChange}
         />
       )}
     </Field>
   </Grid>
 );
 
-export default OpelSlider;
+export default RenderOpelSlider;
+const marks = [
+  {
+    value: 1,
+    label: "Opel 1",
+  },
+  {
+    value: 2,
+    label: "Opel 2",
+  },
+  {
+    value: 3,
+    label: "Opel 3",
+  },
+  {
+    value: 4,
+    label: "Opel 4",
+  },
+];

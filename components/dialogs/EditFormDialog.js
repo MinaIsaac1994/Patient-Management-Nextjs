@@ -9,28 +9,23 @@ import {
   DialogContent,
   DialogActions,
 } from "@mui/material";
-import { forwardRef, useEffect } from "react";
 import { Formik, Form } from "formik";
 import { useToaster } from "@/config/Toaster";
+import { useState, forwardRef, useEffect } from "react";
 import useFormStructure from "@/hooks/useFormStructure";
-import { convertArrayToObject } from "@/utils/functions";
 import RenderTextField from "../costumFields/RenderTextField";
-import RenderSelectField from "../costumFields/RenderSelectField";
-import RenderMultiSelectField from "../costumFields/RenderMultiSelectField";
-import { useState } from "react";
+import RenderDateField from "../costumFields/RenderDateField";
+import RenderOpelSlider from "../costumFields/RenderOpelSlider";
 import RenderSwitchField from "../costumFields/RenderSwitchField";
+import RenderSelectField from "../costumFields/RenderSelectField";
+import RenderToggleButton from "../costumFields/RenderToggleButton";
+import RenderMultiSelectField from "../costumFields/RenderMultiSelectField";
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const teamLeaders = [
-  { value: "leader1", label: "Leader 1" },
-  { value: "leader2", label: "Leader 2" },
-  { value: "leader3", label: "Leader 3" },
-];
 const EditFormDialog = ({
-  id,
   onClose,
   fetchApi,
   title = "",
@@ -39,12 +34,13 @@ const EditFormDialog = ({
   handleSubmit = () => null,
 }) => {
   const { showToaster } = useToaster();
-  const { fields } = useFormStructure(formStructer);
   const [data, setData] = useState(null);
+  const { fields } = useFormStructure(formStructer);
+
   useEffect(() => {
     const handleFetch = async () => {
       try {
-        const details = await fetchApi(id);
+        const details = await fetchApi();
         setData(details);
       } catch (error) {
         showToaster("error", error.message);
@@ -85,8 +81,8 @@ const EditFormDialog = ({
                   {fields?.map(
                     ({
                       id,
-                      list,
                       label,
+                      list = [],
                       size = 12,
                       type = "text",
                       Icon = () => null,
@@ -99,6 +95,18 @@ const EditFormDialog = ({
                             key={id}
                             size={size}
                             Icon={Icon}
+                            label={label}
+                            multiline={multiline}
+                          />
+                        );
+                      }
+                      if (type === "date") {
+                        return (
+                          <RenderDateField
+                            id={id}
+                            key={id}
+                            Icon={Icon}
+                            size={size}
                             label={label}
                             multiline={multiline}
                           />
@@ -122,9 +130,9 @@ const EditFormDialog = ({
                           <RenderMultiSelectField
                             id={id}
                             key={id}
+                            list={list}
                             size={size}
                             label={label}
-                            list={teamLeaders}
                             setFieldValue={setFieldValue}
                           />
                         );
@@ -132,10 +140,32 @@ const EditFormDialog = ({
                       if (type === "switch") {
                         return (
                           <RenderSwitchField
-                            key={id}
                             id={id}
-                            label={label}
+                            key={id}
                             size={size}
+                            label={label}
+                            setFieldValue={setFieldValue}
+                          />
+                        );
+                      }
+                      if (type === "toggle") {
+                        return (
+                          <RenderToggleButton
+                            id={id}
+                            key={id}
+                            size={size}
+                            label={label}
+                            setFieldValue={setFieldValue}
+                          />
+                        );
+                      }
+                      if (type === "slider") {
+                        return (
+                          <RenderOpelSlider
+                            id={id}
+                            key={id}
+                            size={size}
+                            label={label}
                             setFieldValue={setFieldValue}
                           />
                         );
