@@ -10,7 +10,6 @@ import { WardsServices } from "@/services/wards";
 import { PatientModel } from "@/models/patients";
 import { Box, Fab, Typography } from "@mui/material";
 import { PatientServices } from "@/services/patients";
-import { TherapistServices } from "@/services/therapist";
 import FormDialog from "@/components/dialogs/FormDialog";
 import EditFormDialog from "@/components/dialogs/EditFormDialog";
 import usePatientsColumns from "@/config/columns/usePatientsColumns";
@@ -22,7 +21,8 @@ const Patients = () => {
   const [theme, colorMode] = useMode();
   const colors = tokens(theme.palette.mode);
 
-  const { columns } = usePatientsColumns();
+  const [columns] = usePatientsColumns();
+  const [tableColumns, setTableColumns] = useState([]);
 
   const [id, setId] = useState(null);
   const [patients, setPatients] = useState([]);
@@ -36,8 +36,9 @@ const Patients = () => {
   const fetchPatients = async () => {
     try {
       const data = await PatientServices.fetchAll();
-      const mappedData = PatientModel.fetchAll(data, columns);
+      const [mappedData, mappedColumns] = PatientModel.fetchAll(data, columns);
       setPatients(mappedData);
+      setTableColumns(mappedColumns);
     } catch (err) {
       showToaster("error", err.message);
     }
@@ -91,7 +92,7 @@ const Patients = () => {
         <Box sx={{ m: 1 }}>
           <CustomTable
             data={patients}
-            columns={columns}
+            columns={tableColumns}
             detailPanel={({ row }) => (
               <DetailPanel row={row.original?.detailPanel} />
             )}
@@ -211,8 +212,8 @@ const formStructer = [
   },
   {
     size: 12,
+    label: "Opel",
     type: "slider",
     id: "priority",
-    label: "Opel",
   },
 ];

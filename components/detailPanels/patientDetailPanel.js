@@ -25,7 +25,7 @@ const DetailPanel = ({ row }) => {
   console.log({ row });
   const { address, specificity, details, area, diagnosis } = row;
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1, p: 2 }}>
       <Grid container spacing={2}>
         <Grid item xs={6}>
           <Item>

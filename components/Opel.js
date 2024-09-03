@@ -1,5 +1,4 @@
 import { Chip, Typography } from "@mui/material";
-import HourglassBottomRoundedIcon from "@mui/icons-material/HourglassBottomRounded";
 export const Opel = ({ opel }) => (
   <Chip
     // icon={<HourglassBottomRoundedIcon />}

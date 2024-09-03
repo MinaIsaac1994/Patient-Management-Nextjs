@@ -13,22 +13,22 @@ function fetchAll(apiResponse, columns) {
     });
 
     // Add the rest of the data to detailPanel
-    const detailPanel = {};
-    for (const key in record) {
-      if (
-        !mappedRecord.hasOwnProperty(key) &&
-        key !== "team" &&
-        key !== "ward"
-      ) {
-        detailPanel[key] = record[key];
-      }
-    }
+    // const detailPanel = {};
+    // for (const key in record) {
+    //   if (
+    //     !mappedRecord.hasOwnProperty(key) &&
+    //     key !== "team" &&
+    //     key !== "ward"
+    //   ) {
+    //     detailPanel[key] = record[key];
+    //   }
+    // }
 
-    // Add nested team and ward data to detailPanel
-    detailPanel.team = record?.team;
-    detailPanel.ward = record?.ward;
+    // // Add nested team and ward data to detailPanel
+    // detailPanel.team = record?.team;
+    // detailPanel.ward = record?.ward;
 
-    mappedRecord.detailPanel = detailPanel;
+    // mappedRecord.detailPanel = detailPanel;
 
     return mappedRecord;
   });
@@ -40,6 +40,6 @@ function fetchAll(apiResponse, columns) {
   return [mappedResponse, mappedColumns];
 }
 
-export const PatientModel = {
+export const TherapistModel = {
   fetchAll,
 };

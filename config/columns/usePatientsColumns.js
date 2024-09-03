@@ -1,6 +1,7 @@
 "use client";
 import { useMemo } from "react";
-import { Chip, Typography } from "@mui/material";
+import { Opel } from "@/components/Opel";
+import { MFFD } from "@/components/MFFD";
 
 const usePatientsColumns = () => {
   const columns = useMemo(
@@ -36,14 +37,21 @@ const usePatientsColumns = () => {
         accessorKey: "ward",
       },
       {
+        size: 150,
+        header: "MFFD",
+        accessorKey: "mffd",
+        Cell: ({ cell }) => <MFFD value={cell.getValue()} />,
+      },
+      {
         size: 100,
         header: "Priority",
         accessorKey: "priority",
+        Cell: ({ cell }) => <Opel opel={cell.getValue()} />,
       },
     ],
     []
   );
-  return { columns };
+  return [columns];
 };
 
 export default usePatientsColumns;

@@ -78,10 +78,10 @@ const FormDialog = ({
                         <RenderTextField
                           key={id}
                           id={id}
-                          label={label}
                           Icon={Icon}
-                          multiline={multiline}
                           size={size}
+                          label={label}
+                          multiline={multiline}
                         />
                       );
                     }

@@ -20,7 +20,13 @@ import icons from "@/components/icons";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 
-const Table = ({ data, columns, detailPanel = null, rowActions = null }) => {
+const Table = ({
+  data,
+  columns = [],
+  grouping = [],
+  rowActions = null,
+  detailPanel = null,
+}) => {
   const renderRowActionMenuItems = rowActions
     ? ({ closeMenu, row }) =>
         rowActions.map(
@@ -74,7 +80,7 @@ const Table = ({ data, columns, detailPanel = null, rowActions = null }) => {
   // ];
 
   const table = useMaterialReactTable({
-    data, //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
+    data,
     columns,
     enableDensityToggle: false,
     enableColumnFilterModes: true,
@@ -85,6 +91,7 @@ const Table = ({ data, columns, detailPanel = null, rowActions = null }) => {
     enableRowActions: rowActions ? true : false,
     enableRowSelection: false,
     initialState: {
+      // grouping: [""],
       showColumnFilters: false,
       showGlobalFilter: true,
       columnPinning: {
@@ -106,6 +113,7 @@ const Table = ({ data, columns, detailPanel = null, rowActions = null }) => {
     },
     renderDetailPanel: detailPanel,
     renderRowActionMenuItems,
+
     // renderTopToolbar: ({ table }) => {
     //   const handleDeactivate = () => {
     //     table.getSelectedRowModel().flatRows.map((row) => {
@@ -170,6 +178,56 @@ const Table = ({ data, columns, detailPanel = null, rowActions = null }) => {
     //       </Box>
     //     </Box>
     //   );
+    // },
+    muiTablePaperProps: {
+      elevation: 10,
+      sx: (theme) => ({
+        borderRadius: "12px/12px",
+        backgroundColor: theme.palette.background.paper,
+      }),
+    },
+    muiTableHeadCellProps: {
+      sx: (theme) => ({
+        backgroundColor: theme.palette.background.paper,
+      }),
+    },
+    muiTableBodyRowProps: {
+      sx: (theme) => ({
+        backgroundColor: "#1c1e24",
+      }),
+    },
+    muiTopToolbarProps: {
+      sx: (theme) => ({
+        backgroundColor: theme.palette.background.paper,
+      }),
+    },
+    muiBottomToolbarProps: {
+      sx: (theme) => ({
+        backgroundColor: theme.palette.background.paper,
+      }),
+    },
+    muiDetailPanelProps: {
+      sx: (theme) => ({
+        backgroundColor: "#121417",
+      }),
+    },
+    displayColumnDefOptions: {
+      "mrt-row-actions": {
+        muiTableBodyCellProps: {
+          align: "center", //change head cell props
+          sx: {
+            backgroundColor: "#020814 !important",
+          },
+        },
+        muiTableHeadCellProps: {
+          align: "center", //change head cell props
+        },
+      },
+    },
+    // muiColumnActionsButtonProps: {
+    //   sx: {
+    //     width: 0,
+    //   },
     // },
   });
 
